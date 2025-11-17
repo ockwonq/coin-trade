@@ -1,0 +1,69 @@
+{
+  "family": "bitget-trading-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::<account-id>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<account-id>:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "<account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/bitget-trading/backend:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "5000"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "MONGODB_URI",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:<account-id>:secret:bitget-trading/env:MONGODB_URI::"
+        },
+        {
+          "name": "JWT_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:<account-id>:secret:bitget-trading/env:JWT_SECRET::"
+        },
+        {
+          "name": "BITGET_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:<account-id>:secret:bitget-trading/env:BITGET_API_KEY::"
+        },
+        {
+          "name": "BITGET_SECRET_KEY",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:<account-id>:secret:bitget-trading/env:BITGET_SECRET_KEY::"
+        },
+        {
+          "name": "BITGET_PASSPHRASE",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:<account-id>:secret:bitget-trading/env:BITGET_PASSPHRASE::"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bitget-trading-backend",
+          "awslogs-region": "ap-northeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      }
+    }
+  ]
+}
