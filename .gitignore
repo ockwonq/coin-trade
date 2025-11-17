@@ -42,3 +42,6 @@ coverage
 # Misc
 .cache
 .temp
+
+# Claude MCP configuration (contains API keys)
+.claude/
