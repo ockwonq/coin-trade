@@ -43,10 +43,10 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900">
-      <div className="max-w-md w-full space-y-8 p-8 bg-slate-800 rounded-lg shadow-xl">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4 py-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 p-6 sm:p-8 bg-slate-800 rounded-lg shadow-xl">
         <div>
-          <h2 className="text-center text-3xl font-bold text-primary-400">
+          <h2 className="text-center text-2xl sm:text-3xl font-bold text-primary-400">
             회원가입
           </h2>
           <p className="mt-2 text-center text-sm text-slate-400">
@@ -54,9 +54,9 @@ const Register = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded">
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded text-sm">
               {error}
             </div>
           )}
@@ -73,7 +73,7 @@ const Register = () => {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="mt-1 block w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base min-h-[44px]"
                 placeholder="username"
               />
             </div>
@@ -89,7 +89,7 @@ const Register = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="mt-1 block w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base min-h-[44px]"
                 placeholder="your@email.com"
               />
             </div>
@@ -105,7 +105,7 @@ const Register = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="mt-1 block w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base min-h-[44px]"
                 placeholder="••••••••"
               />
             </div>
@@ -121,7 +121,7 @@ const Register = () => {
                 required
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="mt-1 block w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base min-h-[44px]"
                 placeholder="••••••••"
               />
             </div>
@@ -130,14 +130,14 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary-600 hover:bg-primary-700 active:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px] transition"
           >
             {loading ? '가입 중...' : '회원가입'}
           </button>
 
           <p className="text-center text-sm text-slate-400">
             이미 계정이 있으신가요?{' '}
-            <Link to="/login" className="text-primary-400 hover:text-primary-300">
+            <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
               로그인
             </Link>
           </p>

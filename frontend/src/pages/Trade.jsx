@@ -68,17 +68,17 @@ const Trade = () => {
   const isPositive = parseFloat(priceChange) >= 0
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-white">거래</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white">거래</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Market Info */}
-        <div className="lg:col-span-2 bg-slate-800 rounded-lg p-6 border border-slate-700">
-          <div className="flex items-center justify-between mb-6">
+        <div className="lg:col-span-2 bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
             <select
               value={symbol}
               onChange={(e) => setSymbol(e.target.value)}
-              className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="px-4 py-2.5 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 text-base"
             >
               <option value="BTCUSDT">BTC/USDT</option>
               <option value="ETHUSDT">ETH/USDT</option>
@@ -87,39 +87,39 @@ const Trade = () => {
             </select>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div>
-              <h2 className="text-2xl font-bold text-white mb-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
                 ${parseFloat(currentPrice).toFixed(2)}
               </h2>
               <div className={`flex items-center ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                {isPositive ? <TrendingUp size={20} /> : <TrendingDown size={20} />}
-                <span className="ml-2">{priceChange}%</span>
+                {isPositive ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
+                <span className="ml-2 text-sm sm:text-base">{priceChange}%</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-700">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-slate-700">
               <div>
-                <p className="text-slate-400 text-sm">24h 고가</p>
-                <p className="text-white font-semibold mt-1">
+                <p className="text-slate-400 text-xs sm:text-sm">24h 고가</p>
+                <p className="text-white font-semibold mt-1 text-sm sm:text-base">
                   ${parseFloat(ticker?.data?.high24h || 0).toFixed(2)}
                 </p>
               </div>
               <div>
-                <p className="text-slate-400 text-sm">24h 저가</p>
-                <p className="text-white font-semibold mt-1">
+                <p className="text-slate-400 text-xs sm:text-sm">24h 저가</p>
+                <p className="text-white font-semibold mt-1 text-sm sm:text-base">
                   ${parseFloat(ticker?.data?.low24h || 0).toFixed(2)}
                 </p>
               </div>
               <div>
-                <p className="text-slate-400 text-sm">24h 거래량</p>
-                <p className="text-white font-semibold mt-1">
+                <p className="text-slate-400 text-xs sm:text-sm">24h 거래량</p>
+                <p className="text-white font-semibold mt-1 text-sm sm:text-base">
                   {parseFloat(ticker?.data?.baseVol || 0).toFixed(2)}
                 </p>
               </div>
               <div>
-                <p className="text-slate-400 text-sm">24h 거래대금</p>
-                <p className="text-white font-semibold mt-1">
+                <p className="text-slate-400 text-xs sm:text-sm">24h 거래대금</p>
+                <p className="text-white font-semibold mt-1 text-sm sm:text-base">
                   ${parseFloat(ticker?.data?.quoteVol || 0).toFixed(2)}
                 </p>
               </div>
@@ -128,8 +128,8 @@ const Trade = () => {
         </div>
 
         {/* Trade Form */}
-        <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-          <h2 className="text-xl font-bold text-white mb-4">주문하기</h2>
+        <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+          <h2 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">주문하기</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Buy/Sell Tabs */}
@@ -137,10 +137,10 @@ const Trade = () => {
               <button
                 type="button"
                 onClick={() => setSide('buy')}
-                className={`py-2 rounded-lg font-semibold transition ${
+                className={`py-2.5 sm:py-2 rounded-lg font-semibold transition min-h-[44px] ${
                   side === 'buy'
                     ? 'bg-green-600 text-white'
-                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600 active:bg-slate-500'
                 }`}
               >
                 매수
@@ -148,10 +148,10 @@ const Trade = () => {
               <button
                 type="button"
                 onClick={() => setSide('sell')}
-                className={`py-2 rounded-lg font-semibold transition ${
+                className={`py-2.5 sm:py-2 rounded-lg font-semibold transition min-h-[44px] ${
                   side === 'sell'
                     ? 'bg-red-600 text-white'
-                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600 active:bg-slate-500'
                 }`}
               >
                 매도
@@ -166,7 +166,7 @@ const Trade = () => {
               <select
                 value={orderType}
                 onChange={(e) => setOrderType(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 text-base min-h-[44px]"
               >
                 <option value="market">시장가</option>
                 <option value="limit">지정가</option>
@@ -184,7 +184,7 @@ const Trade = () => {
                   step="0.01"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 text-base min-h-[44px]"
                   placeholder="가격 입력"
                   required
                 />
@@ -201,7 +201,7 @@ const Trade = () => {
                 step="0.00000001"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 text-base min-h-[44px]"
                 placeholder="수량 입력"
                 required
               />
@@ -232,10 +232,10 @@ const Trade = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-lg font-semibold transition ${
+              className={`w-full py-3 rounded-lg font-semibold transition min-h-[48px] ${
                 side === 'buy'
-                  ? 'bg-green-600 hover:bg-green-700 text-white'
-                  : 'bg-red-600 hover:bg-red-700 text-white'
+                  ? 'bg-green-600 hover:bg-green-700 active:bg-green-800 text-white'
+                  : 'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white'
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {loading
