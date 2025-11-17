@@ -56,35 +56,35 @@ const History = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-white">거래 히스토리</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white">거래 히스토리</h1>
 
       {/* Statistics */}
       {statistics && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <p className="text-slate-400 text-sm">총 거래</p>
-            <p className="text-2xl font-bold text-white mt-2">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <p className="text-slate-400 text-xs sm:text-sm">총 거래</p>
+            <p className="text-xl sm:text-2xl font-bold text-white mt-1 sm:mt-2">
               {statistics.totalTrades}
             </p>
           </div>
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <p className="text-slate-400 text-sm">승률</p>
-            <p className="text-2xl font-bold text-white mt-2">
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <p className="text-slate-400 text-xs sm:text-sm">승률</p>
+            <p className="text-xl sm:text-2xl font-bold text-white mt-1 sm:mt-2">
               {statistics.winRate}%
             </p>
           </div>
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <p className="text-slate-400 text-sm">총 수익</p>
-            <p className={`text-2xl font-bold mt-2 ${
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <p className="text-slate-400 text-xs sm:text-sm">총 수익</p>
+            <p className={`text-xl sm:text-2xl font-bold mt-1 sm:mt-2 ${
               statistics.totalProfit >= 0 ? 'text-green-500' : 'text-red-500'
             }`}>
               ${statistics.totalProfit.toFixed(2)}
             </p>
           </div>
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <p className="text-slate-400 text-sm">총 수수료</p>
-            <p className="text-2xl font-bold text-white mt-2">
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <p className="text-slate-400 text-xs sm:text-sm">총 수수료</p>
+            <p className="text-xl sm:text-2xl font-bold text-white mt-1 sm:mt-2">
               ${statistics.totalFees.toFixed(2)}
             </p>
           </div>
@@ -92,15 +92,15 @@ const History = () => {
       )}
 
       {/* Filter */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-2">
         {['all', 'pending', 'filled', 'cancelled'].map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
-            className={`px-4 py-2 rounded-lg font-semibold transition ${
+            className={`px-4 py-2.5 rounded-lg font-semibold transition whitespace-nowrap min-h-[44px] ${
               filter === status
                 ? 'bg-primary-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-400 hover:bg-slate-700 active:bg-slate-600'
             }`}
           >
             {status === 'all' ? '전체' : statusLabels[status]}
@@ -108,8 +108,8 @@ const History = () => {
         ))}
       </div>
 
-      {/* Orders Table */}
-      <div className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden">
+      {/* Orders - Desktop Table */}
+      <div className="hidden md:block bg-slate-800 rounded-lg border border-slate-700 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-slate-900">
@@ -178,6 +178,64 @@ const History = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Orders - Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {orders.map((order) => (
+          <div
+            key={order._id}
+            className="bg-slate-800 rounded-lg p-4 border border-slate-700"
+          >
+            <div className="flex justify-between items-start mb-3">
+              <div>
+                <h3 className="text-white font-semibold">{order.symbol}</h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  {new Date(order.createdAt).toLocaleString('ko-KR', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              </div>
+              <span className={`px-2 py-1 rounded text-xs font-semibold ${statusColors[order.status]}`}>
+                {statusLabels[order.status]}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div>
+                <p className="text-slate-400 text-xs">유형</p>
+                <p className="text-white mt-0.5">
+                  {order.orderType === 'market' ? '시장가' : '지정가'}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-400 text-xs">매수/매도</p>
+                <p className={`mt-0.5 font-medium ${order.side === 'buy' ? 'text-green-500' : 'text-red-500'}`}>
+                  {order.side === 'buy' ? '매수' : '매도'}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-400 text-xs">가격</p>
+                <p className="text-white mt-0.5">
+                  ${order.price ? order.price.toFixed(2) : '-'}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-400 text-xs">수량</p>
+                <p className="text-white mt-0.5">{order.quantity}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {orders.length === 0 && (
+          <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center text-slate-400">
+            거래 내역이 없습니다
+          </div>
+        )}
       </div>
     </div>
   )
