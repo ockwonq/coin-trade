@@ -45,3 +45,4 @@ coverage
 
 # Claude MCP configuration (contains API keys)
 .claude/
+.env.notion
